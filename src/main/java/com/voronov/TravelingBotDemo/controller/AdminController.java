@@ -24,7 +24,6 @@ public class AdminController {
         city.setDescription(param);
 
         return city;
-
     }
 
     @GetMapping
@@ -40,6 +39,7 @@ public class AdminController {
         cityRepository.save(city);
         Iterable<City> cities = cityRepository.findAll();
         model.put("cities", cities);
+
         return "main";
     }
 
@@ -51,15 +51,15 @@ public class AdminController {
         } else {
             cities = cityRepository.findAll();
         }
-
         model.put("cities", cities);
-        return "main";
 
+        return "main";
     }
 
     @GetMapping("edit")
     public String editCity(@RequestParam("id") City city, Map<String, Object> model) {
         model.put("city", city);
+
         return "edit";
     }
 
@@ -74,6 +74,7 @@ public class AdminController {
         cityRepository.save(city);
         Iterable<City> cities = cityRepository.findAll();
         model.put("cities", cities);
+
         return "main";
     }
 
