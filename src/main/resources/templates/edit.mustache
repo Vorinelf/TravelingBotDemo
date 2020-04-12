@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div>
+
+    <form method="post" action="save">
+        <span><input tipe="text" name="name" value="{{city.name}}"/></span>
+        <i><input tipe="text" name="description" value="{{city.description}}"/></i>
+        <input type="hidden" name="id" value={{city.id}} />
+        <button type="submit">Save</button>
+    </form>
+    <form method="get" action="/">
+        <button type="submit">Cancel</button>
+    </form>
+
+</div>
+</body>
+</html>
