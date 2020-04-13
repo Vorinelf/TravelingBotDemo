@@ -4,90 +4,67 @@ import com.voronov.TravelingBotDemo.domain.City;
 import com.voronov.TravelingBotDemo.repo.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class AdminController {
 
     @Autowired
     private CityRepository cityRepository;
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public City restMethod(String param) {
-        City city = new City();
-        city.setId((long) 1);
-        city.setName("Minsk");
-        city.setDescription(param);
-
-        return city;
-    }
-
-    @GetMapping
-    public String welcome(Map<String, Object> model) {
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<City> welcome() {
         Iterable<City> cities = cityRepository.findAll();
-        model.put("cities", cities);
-        return "main";
+
+        return cities;
     }
 
-    @PostMapping("main")
-    public String addCity(@RequestParam String name, @RequestParam String description, Map<String, Object> model) {
-        City city = new City(name.toUpperCase(), description.toLowerCase());
-        cityRepository.save(city);
-        Iterable<City> cities = cityRepository.findAll();
-        model.put("cities", cities);
 
-        return "main";
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public City addCity(@RequestBody City city) {
+        City cityForDb = new City(city.getName().toUpperCase(), city.getDescription().toLowerCase());
+        return cityRepository.save(cityForDb);
     }
 
-    @PostMapping("filter")
-    public String filter(@RequestParam String name, Map<String, Object> model) {
+    @RequestMapping(value = "/filter", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<City> filterByName(@RequestBody City city) {
         Iterable<City> cities;
-        if (name != null && !name.isEmpty()) {
-            cities = cityRepository.findByName(name.toUpperCase());
+        if (city.getName() != null && !city.getName().isEmpty()) {
+            cities = cityRepository.findByName(city.getName().toUpperCase());
         } else {
             cities = cityRepository.findAll();
         }
-        model.put("cities", cities);
-
-        return "main";
+        return cities;
     }
 
-    @GetMapping("edit")
-    public String editCity(@RequestParam("id") City city, Map<String, Object> model) {
-        model.put("city", city);
+    @RequestMapping(value = "/sort", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<City> sortByName() {
+        List<City> cities = cityRepository.findAll();
 
-        return "edit";
+        return cities
+                .stream()
+                .sorted(Comparator.comparing(City::getName))
+                .collect(Collectors.toList());
     }
 
-    @PostMapping("save")
-    public String saveCity(@RequestParam("id") City city,
-                           @RequestParam("name") String name,
-                           @RequestParam("description") String description,
-                           Map<String, Object> model
-    ) {
-        city.setName(name.toUpperCase());
-        city.setDescription(description.toLowerCase());
-        cityRepository.save(city);
-        Iterable<City> cities = cityRepository.findAll();
-        model.put("cities", cities);
 
-        return "main";
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public City editCity(@RequestBody City city) {
+        return cityRepository.save(city);
     }
 
-    @PostMapping("delete")
-    public String deleteCity(@RequestParam("id") City city, Map<String,Object> model){
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<City> deleteCity(@RequestBody City city) {
         cityRepository.delete(city);
         Iterable<City> cities = cityRepository.findAll();
-        model.put("cities", cities);
 
-        return "main";
+        return cities;
     }
 }

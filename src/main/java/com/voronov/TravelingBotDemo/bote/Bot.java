@@ -11,7 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +35,11 @@ public class Bot extends TelegramLongPollingBot {
         if (message != null && message.hasText()) {
             String cityName = message.getText();
             List<String> descriptions = botService.findCityByName(cityName);
-            String totalDescriptions = descriptions.stream()
-                    .distinct().collect(Collectors.joining(";" + "\n"));
+            String totalDescriptions = descriptions
+                    .stream()
+                    .distinct()
+                    .collect(Collectors.joining(";" + "\n"));
+
             botService.findCityByName(message.getText());
             sendMsg(message, totalDescriptions);
         }
