@@ -82,15 +82,12 @@ public class AdminController {
         return "main";
     }
 
+    @PostMapping("delete")
+    public String deleteCity(@RequestParam("id") City city, Map<String,Object> model){
+        cityRepository.delete(city);
+        Iterable<City> cities = cityRepository.findAll();
+        model.put("cities", cities);
 
+        return "main";
+    }
 }
-
-
-//    public String welcome (
-//            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-//            Model model){
-//        model.addAttribute("name", name);
-//        return "index";
-//    }
-
-

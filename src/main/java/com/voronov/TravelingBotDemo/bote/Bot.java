@@ -40,9 +40,7 @@ public class Bot extends TelegramLongPollingBot {
                     .distinct().collect(Collectors.joining(";" + "\n"));
             botService.findCityByName(message.getText());
             sendMsg(message, totalDescriptions);
-
         }
-
     }
 
     public void sendMsg(Message message, String text) {
