@@ -21,7 +21,7 @@ public class BotService {
         List<City> cities = cityRepository.findByName(cityName.toUpperCase());
         List<String> descriptions = new ArrayList<>();
         if (cities.size() == 0 && cities.isEmpty()) {
-            descriptions.add("Такой город не найден. Пожалуйста, введите " +
+            descriptions.add("К сожалению, такой город не найден."+"\n"+"Пожалуйста, введите " +
                     "корректное название города на русском языке!");
         } else {
             for (City city : cities
