@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
-@Entity
+@Entity(name = "cities")
 public class City {
 
     @Id
@@ -16,6 +17,8 @@ public class City {
     private String name;
     private String description;
 
+
+
     public City(String name, String description) {
         this.name = name;
         this.description = description;
@@ -23,6 +26,24 @@ public class City {
 
     public City() {
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(id, city.id) &&
+                Objects.equals(name, city.name) &&
+                Objects.equals(description, city.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
+    }
+
+
+
 
     public Long getId() {
         return id;

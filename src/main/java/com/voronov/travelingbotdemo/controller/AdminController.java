@@ -15,7 +15,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<City> findAll() {
         return adminService.findAllCities();
     }
