@@ -25,8 +25,8 @@ public class BotService {
         List<String> descriptions = new ArrayList<>();
         String answerForUser;
         if (cities.size() == 0) {
-            answerForUser = cityName + ":" + "\n" + "К сожалению, такой город не найден." + "\n" +
-                    "Пожалуйста, введите коретное название города на русском языке!";
+            answerForUser = "К сожалению, такой город не найден." + "\n" +
+                    "Пожалуйста, введите корректное название города на русском языке!";
         } else {
             for (City city : cities) {
                 descriptions.add(city.getDescription());
