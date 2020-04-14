@@ -1,6 +1,6 @@
-package com.voronov.TravelingBotDemo.bote;
+package com.voronov.travelingbotdemo.bot;
 
-import com.voronov.TravelingBotDemo.service.BotService;
+import com.voronov.travelingbotdemo.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -10,9 +10,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Component
@@ -34,21 +31,17 @@ public class Bot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         if (message != null && message.hasText()) {
             String cityName = message.getText();
-            List<String> descriptions = botService.findCityByName(cityName);
-            String totalDescriptions = descriptions
-                    .stream()
-                    .distinct()
-                    .collect(Collectors.joining(";" + "\n"));
-            sendMsg(message, totalDescriptions);
+            String answerForUser = botService.findCityByName(cityName);
+            sendMsg(message, answerForUser);
         }
     }
 
-    public void sendMsg(Message message, String text) {
+    public void sendMsg(Message message, String messageForUser) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId());
         sendMessage.setReplyToMessageId(message.getMessageId());
-        sendMessage.setText(text);
+        sendMessage.setText(messageForUser);
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {

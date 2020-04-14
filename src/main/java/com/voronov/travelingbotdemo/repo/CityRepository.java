@@ -1,10 +1,12 @@
-package com.voronov.TravelingBotDemo.repo;
+package com.voronov.travelingbotdemo.repo;
 
-import com.voronov.TravelingBotDemo.domain.City;
+import com.voronov.travelingbotdemo.entity.City;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CityRepository extends JpaRepository<City, Long> {
 
     List<City> findByName(String name);

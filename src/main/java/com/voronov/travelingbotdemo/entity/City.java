@@ -1,4 +1,5 @@
-package com.voronov.TravelingBotDemo.domain;
+package com.voronov.travelingbotdemo.entity;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,12 +16,12 @@ public class City {
     private String name;
     private String description;
 
-    public City() {
-    }
-
     public City(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public City() {
     }
 
     public Long getId() {

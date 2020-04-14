@@ -1,4 +1,4 @@
-package com.voronov.TravelingBotDemo;
+package com.voronov.travelingbotdemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
