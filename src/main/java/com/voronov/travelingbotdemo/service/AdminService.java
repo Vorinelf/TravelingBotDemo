@@ -40,7 +40,7 @@ public class AdminService {
         return cities;
     }
 
-    public List<City> sortCityByName() {
+    public List<City> getListCitiesSortedByName() {
         List<City> cities = cityRepository.findAll();
         List<City> sortedList = cities
                 .stream()

@@ -26,13 +26,13 @@ public class AdminController {
     }
 
     @GetMapping("/filter")
-    public Iterable<City> filterByName(@RequestBody City city) {
+    public List<City> filterByName(@RequestBody City city) {
         return adminService.filterCityByName(city);
     }
 
     @GetMapping("/sort")
     public List<City> sortByName() {
-        return adminService.sortCityByName();
+        return adminService.getListCitiesSortedByName();
     }
 
     @PutMapping
