@@ -39,7 +39,7 @@ class BotServiceTest {
 
     @Test
     void findCityByNameError() {
-        String nameCity = "AAA";
+        String nameCity = " ";
         String answer = botService.findCityByName(nameCity);
 
         assertEquals("К сожалению, такой город не найден." + "\n" +
