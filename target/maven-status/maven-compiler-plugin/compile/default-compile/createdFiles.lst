@@ -1,0 +1,7 @@
+com\voronov\travelingbotdemo\bot\Bot.class
+com\voronov\travelingbotdemo\entity\City.class
+com\voronov\travelingbotdemo\service\AdminService.class
+com\voronov\travelingbotdemo\controller\AdminController.class
+com\voronov\travelingbotdemo\service\BotService.class
+com\voronov\travelingbotdemo\TravelingBotDemoApplication.class
+com\voronov\travelingbotdemo\repo\CityRepository.class
