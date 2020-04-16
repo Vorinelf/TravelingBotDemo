@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class AdminService {
     }
 
     public City addCity(City city) {
-        City cityForDb = new City(city.getName().toUpperCase(), city.getDescription().toLowerCase());
+        City cityForDb = new City(city.getName().toUpperCase(), city.getDescription());
         return cityRepository.save(cityForDb);
     }
 
@@ -50,7 +51,10 @@ public class AdminService {
     }
 
     public City updateCity(City city) {
-        return cityRepository.save(city);
+        City updateCity = cityRepository.findById(city.getId()).get();
+        updateCity.setName(city.getName().toUpperCase());
+        updateCity.setDescription(city.getDescription());
+        return cityRepository.save(updateCity);
     }
 
     public List<City> deleteCity(City city) {
